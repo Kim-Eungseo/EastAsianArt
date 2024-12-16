@@ -42,7 +42,10 @@ class SerperSearchEngineService:
         """
         return f"{query} filetype:{filetype}"
 
-    def search_google_search(self, query: str, num_results: int = 10) -> SearchResponse:
+    # TODO: this is not working
+    def __search_google_search(
+        self, query: str, num_results: int = 10
+    ) -> SearchResponse:
         """
         Searches Google for the given query and returns a SearchResponse object containing the search results.
         :param query: The search query.
@@ -63,14 +66,9 @@ class SerperSearchEngineService:
     def __search(
         self, query: str, url: str, num_results: int = 10, search_type="search"
     ) -> SearchResponse:
-        cached_response = SearchResponse.load_cached_data_serper(query, search_type)
-        if cached_response:
-            return cached_response
-
         payload = {"q": query, "gl": "kr", "hl": "ko", "num": num_results}
 
         search_response: SearchResponse = self.__request_search(payload, url)
-        search_response.cache_self()
         return search_response
 
     def __bulk_search(

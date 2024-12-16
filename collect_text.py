@@ -1,7 +1,22 @@
+# %%
 from search_scrape import SerperSearchEngineService, SearchResponse, RelatedPage
+from key_phrases import key_phrases
 
 service = SerperSearchEngineService()
 
-search_response: SearchResponse = service.search_google_search("국내 쇼핑")
+total_pages = []
+for phrase in key_phrases:
+    print(phrase)
+    try:
+        search_response: SearchResponse = service.search_google_news(
+            phrase, num_results=100
+        )
+        related_pages: list[RelatedPage] = search_response.scrape_all_urls()
+        total_pages.extend(related_pages)
 
-related_pages: list[RelatedPage] = search_response.scrape_all_urls()
+    except Exception as e:
+        import traceback
+
+        traceback.print_exc()
+
+# %%

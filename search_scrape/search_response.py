@@ -26,9 +26,6 @@ class SearchResponse:
         self.related_page_list = None
         self.search_keyword = None
         self.original_data = None
-        self.s3_path = None
-        self.checksum = None
-        self.file_size = 0
 
         if source_type == SourceType.SERPER:
             self.init_serper(original_data, segment_name)
@@ -67,9 +64,7 @@ class SearchResponse:
         from urllib import parse
 
         target_url_map: dict[str, RelatedPage] = {
-            page.link: page
-            for page in self.related_page_list
-            if not page.load_cached_data()
+            page.link: page for page in self.related_page_list
         }
 
         if not target_url_map:
@@ -85,7 +80,6 @@ class SearchResponse:
                 )
                 target_url_map[parsed_url].text = scraped_article.article
 
-                target_url_map[parsed_url].cache_self()
             else:
                 unmatched_articles.append(scraped_article)
 
@@ -107,6 +101,5 @@ class SearchResponse:
                     target_url_map[closest_url].published_date = (
                         missed_article.full_data.get("date", None)
                     )
-                    target_url_map[closest_url].cache_self()
 
         return self.related_page_list

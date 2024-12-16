@@ -1,4 +1,4 @@
-keywords = [
+key_phrases = [
     "Contemporary art East Asia",
     "East Asian art philosophy",
     "Modern art East Asian philosophy",
