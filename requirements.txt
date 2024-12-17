@@ -1,6 +1,9 @@
-trafilatura==1.11.0
-levenshtein==0.26.1
-python-dotenv~=1.0.1
-requests~=2.32.3
+trafilatura
+levenshtein
+python-dotenv
+requests
 lxml_html_clean
-bertopic==0.16.4
+bertopic
+sentence-transformers
+nltk
+nbformat
